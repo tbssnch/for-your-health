@@ -20,20 +20,25 @@ $(document).ready(function () {
         format: 'json'
       },
       success: function success(response) {
-        var body = response.data;
-        for (var i = 0; i < body.length; i++) {
-          var _firstName = body[i].profile.first_name;
-          var _lastName = body[i].profile.last_name;
-          var bio = body[i].profile.bio;
-          var street = body[i].practices[0].visit_address.street;
-          var city = body[i].practices[0].visit_address.city;
-          var state = body[i].practices[0].visit_address.state;
-          var zip = body[i].practices[0].visit_address.zip;
-          var phone = body[i].practices[0].phones[0].number;
-          var newPatient = body[i].practices[0].accepts_new_patients;
+        response.data.map(function (doctorInfo) {
+          var firstName = doctorInfo.profile.first_name;
+          var lastName = doctorInfo.profile.last_name;
+          var bio = doctorInfo.profile.bio;
+          var street = doctorInfo.practices[0].visit_address.street;
+          var city = doctorInfo.practices[0].visit_address.city;
+          var state = doctorInfo.practices[0].visit_address.state;
+          var zip = doctorInfo.practices[0].visit_address.zip;
+          var phone = doctorInfo.practices[0].phones[0].number;
+          // website = doctorInfo.practices[0].website;
+          var website = "";
+          var newPatient = doctorInfo.practices[0].accepts_new_patients;
 
-          $('#form-output').append('\n            <ul>\n            <li>Provider: ' + _firstName + ' ' + _lastName + '</li>\n            <li>Bio: ' + bio + '</li>\n            <li>Address: ' + street + ' ' + city + ' ' + state + ' ' + zip + '</li>\n            <li>Phone: ' + phone + '</li>\n            <li>Accepting New Patients: ' + newPatient + '</li>\n            </ul>');
-        }
+          if (doctorInfo.practices[0].website) {
+            website = '<li>Website: ' + doctorInfo.practices[0] + '</li>';
+          }
+
+          $('#form-output').append('\n            <ul>\n            <li>Provider: ' + firstName + ' ' + lastName + '</li>\n            <li>Bio: ' + bio + '</li>\n            <li>Address: ' + street + ' ' + city + ' ' + state + ' ' + zip + '</li>\n            <li>Phone: ' + phone + '</li>\n            <li>Accepting New Patients: ' + newPatient + '</li>\n            ' + website + '\n            </ul>');
+        });
 
         console.log(response.data);
       },

@@ -14,17 +14,22 @@ $(document).ready(function()  {
         format: 'json',
       },
       success: function(response) {
-        let body = response.data;
-        for (let i = 0; i < body.length; i++) {
-          const firstName = body[i].profile.first_name;
-          const lastName = body[i].profile.last_name;
-          const bio = body[i].profile.bio;
-          const street = body[i].practices[0].visit_address.street;
-          const city = body[i].practices[0].visit_address.city;
-          const state = body[i].practices[0].visit_address.state;
-          const zip = body[i].practices[0].visit_address.zip;
-          const phone = body[i].practices[0].phones[0].number;
-          const newPatient = body[i].practices[0].accepts_new_patients;
+        response.data.map(function(doctorInfo) {
+          const firstName = doctorInfo.profile.first_name;
+          const lastName = doctorInfo.profile.last_name;
+          const bio = doctorInfo.profile.bio;
+          const street = doctorInfo.practices[0].visit_address.street;
+          const city = doctorInfo.practices[0].visit_address.city;
+          const state = doctorInfo.practices[0].visit_address.state;
+          const zip = doctorInfo.practices[0].visit_address.zip;
+          const phone = doctorInfo.practices[0].phones[0].number;
+           // website = doctorInfo.practices[0].website;
+          let website = "";
+          const newPatient = doctorInfo.practices[0].accepts_new_patients;
+
+          if (doctorInfo.practices[0].website) {
+            website = `<li>Website: ${doctorInfo.practices[0]}</li>`
+          }
 
           $('#form-output').append(`
             <ul>
@@ -33,8 +38,9 @@ $(document).ready(function()  {
             <li>Address: ${street} ${city} ${state} ${zip}</li>
             <li>Phone: ${phone}</li>
             <li>Accepting New Patients: ${newPatient}</li>
+            ${website}
             </ul>`);
-        }
+        })
 
         console.log(response.data);
       },
