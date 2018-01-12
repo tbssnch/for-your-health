@@ -23,12 +23,18 @@ $(document).ready(function()  {
           const state = doctorInfo.practices[0].visit_address.state;
           const zip = doctorInfo.practices[0].visit_address.zip;
           const phone = doctorInfo.practices[0].phones[0].number;
-           // website = doctorInfo.practices[0].website;
           let website = "";
-          const newPatient = doctorInfo.practices[0].accepts_new_patients;
+          let newPatient = "";
 
           if (doctorInfo.practices[0].website) {
             website = `<li>Website: ${doctorInfo.practices[0]}</li>`
+          }
+
+          if (doctorInfo.practices[0].accepts_new_patients === true) {
+            newPatient = `<li>Accepting New Patients: Yes</li>`
+          }
+          else if (doctorInfo.practices[0].accepts_new_patients === false) {
+            newPatient = `<li>Accepting New Patients: No</li>`
           }
 
           $('#form-output').append(`
@@ -37,7 +43,7 @@ $(document).ready(function()  {
             <li>Bio: ${bio}</li>
             <li>Address: ${street} ${city} ${state} ${zip}</li>
             <li>Phone: ${phone}</li>
-            <li>Accepting New Patients: ${newPatient}</li>
+            ${newPatient}
             ${website}
             </ul>`);
         })

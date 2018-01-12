@@ -29,15 +29,20 @@ $(document).ready(function () {
           var state = doctorInfo.practices[0].visit_address.state;
           var zip = doctorInfo.practices[0].visit_address.zip;
           var phone = doctorInfo.practices[0].phones[0].number;
-          // website = doctorInfo.practices[0].website;
           var website = "";
-          var newPatient = doctorInfo.practices[0].accepts_new_patients;
+          var newPatient = "";
 
           if (doctorInfo.practices[0].website) {
             website = '<li>Website: ' + doctorInfo.practices[0] + '</li>';
           }
 
-          $('#form-output').append('\n            <ul>\n            <li>Provider: ' + firstName + ' ' + lastName + '</li>\n            <li>Bio: ' + bio + '</li>\n            <li>Address: ' + street + ' ' + city + ' ' + state + ' ' + zip + '</li>\n            <li>Phone: ' + phone + '</li>\n            <li>Accepting New Patients: ' + newPatient + '</li>\n            ' + website + '\n            </ul>');
+          if (doctorInfo.practices[0].accepts_new_patients === true) {
+            newPatient = '<li>Accepting New Patients: Yes</li>';
+          } else if (doctorInfo.practices[0].accepts_new_patients === false) {
+            newPatient = '<li>Accepting New Patients: No</li>';
+          }
+
+          $('#form-output').append('\n            <ul>\n            <li>Provider: ' + firstName + ' ' + lastName + '</li>\n            <li>Bio: ' + bio + '</li>\n            <li>Address: ' + street + ' ' + city + ' ' + state + ' ' + zip + '</li>\n            <li>Phone: ' + phone + '</li>\n            ' + newPatient + '\n            ' + website + '\n            </ul>');
         });
 
         console.log(response.data);
