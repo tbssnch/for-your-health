@@ -17,7 +17,6 @@ $(document).ready(function()  {
         response.data.map(function(doctorInfo) {
           const firstName = doctorInfo.profile.first_name;
           const lastName = doctorInfo.profile.last_name;
-          const bio = doctorInfo.profile.bio;
           const street = doctorInfo.practices[0].visit_address.street;
           const city = doctorInfo.practices[0].visit_address.city;
           const state = doctorInfo.practices[0].visit_address.state;
@@ -40,7 +39,6 @@ $(document).ready(function()  {
           $('#form-output').append(`
             <ul>
             <li>Provider: ${firstName} ${lastName}</li>
-            <li>Bio: ${bio}</li>
             <li>Address: ${street} ${city} ${state} ${zip}</li>
             <li>Phone: ${phone}</li>
             ${newPatient}
@@ -50,7 +48,7 @@ $(document).ready(function()  {
 
         console.log(response.data);
       },
-      error: function() {
+      error: function(response) {
         $('#error').text("There was an error processing your request.");
       }
 
