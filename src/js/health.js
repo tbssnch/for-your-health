@@ -13,7 +13,7 @@ function loadDoctorsSuccess(response) {
     let newPatient = "";
 
     if (doctorInfo.practices[0].website) {
-      website = `<li>Website: ${doctorInfo.practices[0]}</li>`;
+      website = `<li>Website: ${doctorInfo.practices[0].website}</li>`;
     }
 
     if (doctorInfo.practices[0].accepts_new_patients === true) {
@@ -24,13 +24,16 @@ function loadDoctorsSuccess(response) {
     }
 
     $('#form-output').append(`
-      <ul>
-      <li>Provider: ${firstName} ${lastName}</li>
-      <li>Address: ${street} ${city} ${state} ${zip}</li>
-      <li>Phone: ${phone}</li>
-      ${newPatient}
-      ${website}
-      </ul>`);
+      <div class="results">
+        <ul>
+        <li>Provider: ${firstName} ${lastName}</li>
+        <li>Address: ${street} ${city} ${state} ${zip}</li>
+        <li>Phone: ${phone}</li>
+        ${newPatient}
+        ${website}
+        </ul>
+      </div>
+    `);
   });
 }
 
